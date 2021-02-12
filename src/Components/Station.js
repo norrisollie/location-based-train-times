@@ -51,14 +51,20 @@ export default class Station extends Component {
 		let services;
 		if (!timetable.length < 1 && timetableLoaded) {
 			services = timetable.map((service) => {
+				const {
+					train_uid,
+					aimed_departure_time,
+					destination_name,
+					service_timetable: {id},
+				} = service;
 				return (
 					<Service
 						selectedStationName={selectedStationName}
 						selectedStationCode={selectedStationCode}
-						key={service.train_uid}
-						departTime={service.aimed_departure_time}
-						destination={service.destination_name}
-						serviceUrl={service.service_timetable.id}
+						key={train_uid}
+						departTime={aimed_departure_time}
+						destination={destination_name}
+						serviceUrl={id}
 					/>
 				);
 			});
@@ -73,8 +79,7 @@ export default class Station extends Component {
 			<li
 				onClick={(e) => {
 					this.stationClickHandler(e, code);
-				}}
-			>
+				}}>
 				<>{name}</>
 				<ul>{services}</ul>
 			</li>
